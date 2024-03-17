@@ -47,10 +47,11 @@ void DrawStatusBar(void)
 	UI_DrawRepeaterMode();
 	UI_DrawStatusIcon(139, ICON_BATTERY, true, COLOR_FOREGROUND);
 	UI_DrawBattery(!gSettings.RepeaterMode);
+	DISPLAY_DrawRectangle0(0, 83, 160, 1, COLOR_RGB(31,  0,  0)); //Linie Status Bar 
 }
 
 void UI_DrawMain(bool bSkipStatus)
-{
+{	
 	if (bSkipStatus) {
 		DISPLAY_Fill(0, 159, 0, 81, COLOR_BACKGROUND);
 		// DISPLAY_DrawRectangle0(0, 41, 160, 1, gSettings.BorderColor);
@@ -83,6 +84,7 @@ void UI_DrawMain(bool bSkipStatus)
 			gDataDisplay = true;
 		}
 	}
+	DISPLAY_DrawRectangle0(0, 41, 160, 1, COLOR_RGB(31, 63, 31)); //Linie in der Mitte 
 }
 
 void UI_DrawRepeaterMode(void)

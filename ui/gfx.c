@@ -65,6 +65,7 @@ void UI_SetColors(uint8_t DarkMode)
 	if (DarkMode) {
 		COLOR_BACKGROUND = COLOR_RGB( 0,  0,  0);
 		COLOR_FOREGROUND = COLOR_RGB(31, 63, 31);
+		COLOR_GREY  = COLOR_RGB(16, 31, 16); //moved color grey
 	} else {
 		COLOR_BACKGROUND = COLOR_RGB(31, 63, 31);
 		COLOR_FOREGROUND = COLOR_RGB( 0,  0,  0);
@@ -72,7 +73,7 @@ void UI_SetColors(uint8_t DarkMode)
 	COLOR_RED   = COLOR_RGB(31,  0,  0);
 	COLOR_GREEN = COLOR_RGB( 0, 63,  0);
 	COLOR_BLUE  = COLOR_RGB( 0,  0, 31);
-	COLOR_GREY  = COLOR_RGB(16, 32, 16);
+	//COLOR_GREY  = COLOR_RGB(16, 32, 16);
 
 	gColorBackground = COLOR_BACKGROUND;
 	gColorForeground = COLOR_FOREGROUND;
