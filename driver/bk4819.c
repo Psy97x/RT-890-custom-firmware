@@ -741,15 +741,23 @@ void BK4819_SetupPowerAmplifier(uint8_t Bias)
 	BK4819_WriteRegister(0x36, Value);
 }
 
-void BK4819_EnableRfTxDeviation(void)
+void BK4819_EnableRfTxDeviation(void) //Bandwith Fix
 {
-	uint16_t Deviation;
+	/*uint16_t Deviation;
 
 	Deviation = gMainVfo->bIsNarrow ? gFrequencyBandInfo.TxDeviationNarrow : gFrequencyBandInfo.TxDeviationWide;
 	if (gMainVfo->Scramble) {
 		Deviation -= 200;
+	} */ //wont work anymore. Who cares about Scramble anyway HI
+	
+	if (gMainVfo->bIsNarrow){
+		BK4819_WriteRegister(0x40, 0x1432);	
 	}
-	BK4819_WriteRegister(0x40, Deviation);
+	else {
+		BK4819_WriteRegister(0x40, 0x15E0);	
+	}
+	
+	
 }
 
 void BK4819_SetMicSensitivityTuning(void)
