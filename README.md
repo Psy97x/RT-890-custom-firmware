@@ -10,7 +10,9 @@ This is my modification of the OEFW-community firmware. Mostly UI based.
 
 Currently only for the V2.0 board. 
 
+![main_black](https://github.com/Psy97x/RT-890-custom-firmware/blob/main/Images/main_black.jpeg)
 
+![main_black](https://github.com/Psy97x/RT-890-custom-firmware/blob/main/Images/main_white.jpeg)
 
 
 
