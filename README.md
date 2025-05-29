@@ -2,7 +2,7 @@
 
 This is my modification of the OEFW-community firmware. Mostly UI based.
 
-##My Modifications are: 
+## My Modifications are: 
 - different font colors
 - different icons in menu and main screen
 - ui is inspired by the first marketing pictures from iRadio
