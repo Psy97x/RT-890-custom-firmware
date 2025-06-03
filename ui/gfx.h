@@ -47,6 +47,7 @@ extern uint16_t COLOR_RED;
 extern uint16_t COLOR_GREEN;
 extern uint16_t COLOR_BLUE;
 extern uint16_t COLOR_GREY;
+extern uint16_t COLOR_LINE;
 
 extern uint16_t gColorForeground;
 extern uint16_t gColorBackground;
