@@ -27,7 +27,11 @@
 
 enum {
 	GPIO_FILTER_UHF     = 1U << 5,
-	GPIO_FILTER_VHF     = 1U << 6,
+#ifdef PCB_VER_2_1
+	GPIO_FILTER_VHF     = 1U << 3,
+#else
+	GPIO_FILTER_VHF	    = 1U << 6,
+#endif
 	GPIO_FILTER_UNKWOWN = 1U << 7,
 };
 
@@ -189,7 +193,12 @@ void BK4819_Init(void)
 	BK4819_WriteRegister(0x00, 0x0000);
 	BK4819_WriteRegister(0x37, 0x1D0F);
 	// DisableAGC(0);
-	BK4819_WriteRegister(0x33, 0x1F00);
+	//BK4819_WriteRegister(0x33, 0x1F00);
+	#ifdef PCB_VER_2_1
+		BK4819_WriteRegister(0x33, 0x5700);
+	#else
+		BK4819_WriteRegister(0x33, 0x1F00);
+	#endif
 	BK4819_WriteRegister(0x35, 0x0000);
 	BK4819_WriteRegister(0x1E, 0x4C58);
 	BK4819_WriteRegister(0x1F, 0xA656);
