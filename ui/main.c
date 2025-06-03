@@ -26,6 +26,8 @@
 #include "ui/main.h"
 #include "ui/vfo.h"
 
+
+
 void DrawStatusBar(void)
 {
 	DISPLAY_Fill(0, 159, 0, 96, COLOR_BACKGROUND);
@@ -38,15 +40,15 @@ void DrawStatusBar(void)
 	if (gSettings.DtmfState == DTMF_STATE_STUNNED) {
 		UI_DrawStatusIcon(4, ICON_LOCK, true, COLOR_RED);
 	} else {
-		UI_DrawStatusIcon(4, ICON_LOCK, gSettings.Lock, COLOR_FOREGROUND);
+		UI_DrawStatusIcon(4, ICON_LOCK, gSettings.Lock, COLOR_FOREGROUND); 
 	}
 
 	UI_DrawStatusIcon(56, ICON_DUAL_WATCH, gSettings.DualStandby, COLOR_FOREGROUND);
 	UI_DrawStatusIcon(80, ICON_VOX, gSettings.Vox, COLOR_FOREGROUND);
 	UI_DrawRoger();
-	UI_DrawRepeaterMode();
+	//UI_DrawRepeaterMode();
 	UI_DrawStatusIcon(139, ICON_BATTERY, true, COLOR_FOREGROUND);
-	UI_DrawBattery(!gSettings.RepeaterMode);
+	UI_DrawBattery(true);
 	DISPLAY_DrawRectangle0(0, 83, 160, 1, COLOR_RGB(31,  0,  0)); //Linie Status Bar 
 }
 
@@ -84,16 +86,17 @@ void UI_DrawMain(bool bSkipStatus)
 			gDataDisplay = true;
 		}
 	}
-	DISPLAY_DrawRectangle0(0, 41, 160, 1, COLOR_RGB(31, 63, 31)); //Linie in der Mitte 
+		DISPLAY_DrawRectangle0(0, 41, 160, 1, COLOR_LINE); //Linie in der Mitte 
+
 }
 
-void UI_DrawRepeaterMode(void)
+/*void UI_DrawRepeaterMode(void)
 {
 	if (gSettings.RepeaterMode) {
 		DISPLAY_DrawRectangle0(109, 86, 30, 8, gColorBackground);
 		UI_DrawStatusIcon(109, gSettings.RepeaterMode == 1 ? ICON_TR : ICON_RR, true, COLOR_FOREGROUND);
 	}
-}
+}*/
 
 void UI_DrawBattery(bool bDisplayVoltage)
 {
@@ -115,15 +118,50 @@ void UI_DrawBattery(bool bDisplayVoltage)
 	DISPLAY_DrawRectangle0(142, 86, 15 - i, 8, gColorBackground);
 	DISPLAY_DrawRectangle0(157 - i, 86, i, 8, Color);
 
-	// Battery voltage
-	if (bDisplayVoltage){
-		UI_DrawStatusIcon(109, ICON_RR, false, 0);	// Clear Repeater icon
+	// Battery Voltage
+	/*if (bDisplayVoltage){
 		gColorForeground = COLOR_FOREGROUND;
 		Int2Ascii(gBatteryVoltage, 2);
 		gShortString[2] = gShortString[1];
 		gShortString[1] = '.';
 		gShortString[3] = 'V';
-		UI_DrawSmallString(109, 86, gShortString, 4);
+		UI_DrawSmallString(115, 86, gShortString, 4);
+	} 
+	*/
+
+	// Battery Percentage
+
+	if (bDisplayVoltage){
+		gColorForeground = COLOR_FOREGROUND;
+
+		uint8_t i;
+		for (i = 15; i > 0; i--) {
+			if (gBatteryVoltage > gCalibration.BatteryCalibration[i - 1]) {
+				break;
+			}
+		}
+		//what a mess i know
+		int percent = (i * 100) / 15;
+		if (percent > 100) percent = 100;
+
+		int digit;
+		int pixel;
+
+		if (percent == 100){
+			digit = 3;
+			pixel = 115;
+		}
+		else{
+			digit = 2;
+			pixel = 120;
+		}
+
+		Int2Ascii(percent, digit);  
+		gShortString[digit] = '\0'; 
+
+		UI_DrawSmallString(pixel, 86, gShortString, 3);
+		UI_DrawPercent(133, 86);
 	}
+	
 }
 
