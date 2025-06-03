@@ -473,7 +473,7 @@ void MENU_AcceptSetting(void)
 
 	case MENU_REPEATER_MODE:
 		gSettings.RepeaterMode = (gSettingCurrentValue + gSettingIndex) % gSettingMaxValues;
-		UI_DrawRepeaterMode();
+		//UI_DrawRepeaterMode();
 		SETTINGS_SaveGlobals();
 		break;
 
