@@ -27,6 +27,7 @@ uint16_t COLOR_RED;
 uint16_t COLOR_GREEN;
 uint16_t COLOR_BLUE;
 uint16_t COLOR_GREY;
+uint16_t COLOR_LINE;
 
 void DISPLAY_FillColor(uint16_t Color)
 {
@@ -66,15 +67,16 @@ void UI_SetColors(uint8_t DarkMode)
 		COLOR_BACKGROUND = COLOR_RGB( 0,  0,  0);
 		COLOR_FOREGROUND = COLOR_RGB(31, 63, 31);
 		COLOR_GREY  = COLOR_RGB(16, 31, 16); //moved color grey
+		COLOR_LINE = COLOR_RGB (245, 245, 245);
 	} else {
 		COLOR_BACKGROUND = COLOR_RGB(31, 63, 31);
-		COLOR_FOREGROUND = COLOR_RGB( 0,  0,  0);
+		COLOR_FOREGROUND = COLOR_RGB( 0,  10,  0);
+		COLOR_LINE  = COLOR_RGB(0, 0, 0);
 	}
 	COLOR_RED   = COLOR_RGB(31,  0,  0);
 	COLOR_GREEN = COLOR_RGB( 0, 63,  0);
 	COLOR_BLUE  = COLOR_RGB( 0,  0, 31);
-	//COLOR_GREY  = COLOR_RGB(16, 32, 16);
-
+	
 	gColorBackground = COLOR_BACKGROUND;
 	gColorForeground = COLOR_FOREGROUND;
 
