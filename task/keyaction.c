@@ -158,7 +158,7 @@ void KeypressAction(uint8_t Action) {
 				gSettings.RepeaterMode = (gSettings.RepeaterMode + 1) % 3;
 				SETTINGS_SaveGlobals();
 				RADIO_Tune(gSettings.CurrentVfo);
-				UI_DrawRepeaterMode();
+				//UI_DrawRepeaterMode();
 				if (gSettings.DualDisplay == 0) {
 					UI_DrawVfo(gSettings.CurrentVfo);
 				} else {
