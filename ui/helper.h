@@ -35,6 +35,7 @@ typedef enum UI_Icon_t UI_Icon_t;
 
 void UI_DrawString(uint8_t X, uint8_t Y, const char *String, uint8_t Size);
 void UI_DrawSmallCharacter(uint8_t X, uint8_t Y, char Digit);
+void UI_DrawPercent(uint8_t X, uint8_t Y);
 void UI_DrawDigits(const char *pDigits, uint8_t Vfo);
 void UI_DrawSmallString(uint8_t X, uint8_t Y, const char *String, uint8_t Size);
 void UI_DrawStatusIcon(uint8_t X, UI_Icon_t Icon, bool bDraw, uint16_t Color);
