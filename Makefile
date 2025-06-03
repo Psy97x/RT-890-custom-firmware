@@ -11,6 +11,7 @@ ENABLE_TX_BAR			?= 1
 ENABLE_SLOWER_RSSI_TIMER	?= 1
 ENABLE_SPECTRUM			?= 1
 ENABLE_KEEP_MONITOR_MODE_UP_DN	?= 0
+PCB_VER_2_1			?= 1
 
 # Spectrum presets - 1.4 kB
 ENABLE_SPECTRUM_PRESETS		?= 1
@@ -206,6 +207,11 @@ ifeq ($(MOTO_STARTUP_TONE),1)
 endif
 ifeq ($(ENABLE_AM_FIX),1)
 	CFLAGS += -DENABLE_AM_FIX
+
+ifeq ($(PCB_VER_2_1),1)Add commentMore actions
+	CFLAGS += -DPCB_VER_2_1
+endif
+
 endif
 ifeq ($(ENABLE_ALT_SQUELCH),1)
 	CFLAGS += -DENABLE_ALT_SQUELCH
