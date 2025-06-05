@@ -1,15 +1,23 @@
 # Radtel RT-890 Custom Firmware modification by DO2LET
 
-This is my modification of the OEFW-community firmware. Mostly UI based.
+This is my variant of the OEFW-community firmware. Mostly UI based, my focus is to improve this radio for HAM Radio. 
 
 ## My Modifications are: 
 - different font colors
 - different icons in menu and main screen
 - ui is inspired by the first marketing pictures from iRadio
-- Bandwith Wide/Narrow fix. Before it did nothing. Improvement on modulation. 
+- Bandwith Wide/Narrow fix. Before it did nothing. Improvement on modulation.
+- Battery shown in % (beta)
 
-Currently only for the V2.0 board. 
+Future TODOs: 
+- remove some non-HAM features like Roger beep or Scrambler
+- optimize menu, create sub menus for ScanLists and Key bindings 
+- programming new repeaters is nearly impossible. This needs to be improved!
 
+
+~Currently only for the V2.0 board.~ Added support for both 2.0 and 2.1 PCBs. 
+
+(these pictures are currently not Up2Date)
 ![main_black](https://github.com/Psy97x/RT-890-custom-firmware/blob/main/Images/main_black.jpeg)
 
 ![main_black](https://github.com/Psy97x/RT-890-custom-firmware/blob/main/Images/main_white.jpeg)
