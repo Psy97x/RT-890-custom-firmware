@@ -125,6 +125,10 @@ static const uint32_t IconRadio[] = {
 	0x7FFC00, 0x800300, 0xAA7B00, 0xAA7A00, 0xAA7A00, 0xAA7A00, 0xAA7A00, 0x8003FF, 0x7FFC00,
 };
 
+static const uint32_t PercentIcon[] = {
+	0x63, 0x33, 0x18, 0xCC, 0xC6,
+};
+
 #ifdef ENABLE_FM_RADIO
 static const uint8_t BitmapFM[] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x04, 0x08, 0x08, 0x10, 0x1F, 0x20,
@@ -251,6 +255,26 @@ void UI_DrawSmallCharacter(uint8_t X, uint8_t Y, char Digit)
 	}
 }
 
+void UI_DrawPercent(uint8_t X, uint8_t Y)
+{
+	uint8_t i;
+
+	for (i = 0; i < 5; i++) {
+		uint8_t Pixel = PercentIcon[i];
+		uint8_t j;
+
+		ST7735S_SetPosition(X + i, Y);
+		for (j = 0; j < 8; j++) {
+			if (Pixel & 0x80U) {
+				ST7735S_SendU16(gColorForeground);
+			} else {
+				ST7735S_SendU16(gColorBackground);
+			}
+			Pixel <<= 1;
+		}
+	}
+}
+
 void UI_DrawDigits(const char *pDigits, uint8_t Vfo)
 {
 	uint8_t X;
@@ -279,6 +303,7 @@ void UI_DrawSmallString(uint8_t X, uint8_t Y, const char *String, uint8_t Size)
 		X += 6;
 	}
 }
+
 
 void UI_DrawStatusIcon(uint8_t X, UI_Icon_t Icon, bool bDraw, uint16_t Color)
 {
