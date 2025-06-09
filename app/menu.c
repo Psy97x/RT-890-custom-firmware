@@ -50,7 +50,7 @@ static const char Menu[][14] = {
 	"TX CTCSS/DCS  ",
 	"DCS Mute Code ",
 	"DCS Encrypt   ",
-	"Scrambler     ",
+	"Compander     ",
 	"CH Name       ",
 	"Save CH       ",
 	"Delete CH     ",
@@ -58,7 +58,7 @@ static const char Menu[][14] = {
 	"Dual Display  ",
 	"TX Priority   ",
 	"TX Tail Tone  ",
-	"Roger Beep    ",
+	//"Roger Beep    ", Removed Roger Beep
 	"TOT           ",
 	"PTT Busy Lock ",
 	"VOX Level     ",
@@ -187,7 +187,7 @@ static void EnableTextEditor(void)
 
 static void DrawSettingName(uint8_t Index)
 {
-	gColorForeground = COLOR_BLUE;
+	gColorForeground = COLOR_RED;
 	UI_DrawString(24, 72, Menu[Index], 14);
 	Int2Ascii((Index + 1), 2);
 	UI_DrawString(140, 72, gShortString, 2);
@@ -386,11 +386,11 @@ void MENU_AcceptSetting(void)
 		SETTINGS_SaveGlobals();
 		break;
 
-	case MENU_ROGER_BEEP:
+	/*case MENU_ROGER_BEEP:               Removed Roger Beep 
 		gSettings.RogerBeep = (gSettingCurrentValue + gSettingIndex) % gSettingMaxValues;
 		UI_DrawRoger();
 		SETTINGS_SaveGlobals();
-		break;
+		break;*/
 
 	case MENU_DUAL_DISPLAY:
 		gSettings.DualDisplay = gSettingIndex;
@@ -487,6 +487,13 @@ void MENU_AcceptSetting(void)
 		SETTINGS_SaveGlobals();
 		break;
 
+	case MENU_Compander:
+		gExtendedSettings.CompanderAdjust = (gSettingCurrentValue + gSettingIndex) % gSettingMaxValues;
+		//gExtendedSettings.CompanderAdjust = gSettingIndex;
+		SETTINGS_SaveGlobals();
+		BK4819_SetCompanderAdjustment(gExtendedSettings.CompanderAdjust);
+		break;
+	
 	case MENU_CTCSS_DCS:
 		gVfoState[gSettings.CurrentVfo].TX.CodeType = gSettingCodeType;
 		gVfoState[gSettings.CurrentVfo].TX.Code = gSettingCode;
@@ -575,12 +582,6 @@ void MENU_AcceptSetting(void)
 
 	case MENU_BUSY_LOCK:
 		gVfoState[gSettings.CurrentVfo].BCL = (gSettingCurrentValue + gSettingIndex) % gSettingMaxValues;
-		CHANNELS_SaveVfo();
-		break;
-
-	case MENU_SCRAMBLER:
-		BEEP_Disable();
-		gVfoState[gSettings.CurrentVfo].Scramble = (gSettingCurrentValue + gSettingIndex) % gSettingMaxValues;
 		CHANNELS_SaveVfo();
 		break;
 
@@ -774,12 +775,12 @@ void MENU_DrawSetting(void)
 		UI_DrawToggle();
 		break;
 
-	case MENU_ROGER_BEEP:
+	/*case MENU_ROGER_BEEP:
 		gSettingCurrentValue = gSettings.RogerBeep;
 		gSettingMaxValues = 4;
 		DISPLAY_Fill(0, 159, 1, 55, COLOR_BACKGROUND);
 		UI_DrawSettingRoger(gSettingCurrentValue);
-		break;
+		break; */
 
 	case MENU_DUAL_DISPLAY:
 		gSettingIndex = gSettings.DualDisplay;
@@ -935,6 +936,13 @@ void MENU_DrawSetting(void)
 		UI_DrawSettingNumList(gSettingCurrentValue, gSettingMaxValues);
 		break;
 
+	case MENU_Compander:
+		gSettingMaxValues = 3;
+    	gSettingCurrentValue = gExtendedSettings.CompanderAdjust; // Wert laden
+    	DISPLAY_Fill(0, 159, 1, 55, COLOR_BACKGROUND);
+    	UI_DrawCompander(gSettingCurrentValue);
+    	break;
+
 	case MENU_SQUELCH_MODE:
 		gSettingCurrentValue = gExtendedSettings.SqMode;
 		gSettingMaxValues = 4;
@@ -995,14 +1003,7 @@ void MENU_DrawSetting(void)
 		DISPLAY_Fill(0, 159, 1, 55, COLOR_BACKGROUND);
 		UI_DrawSettingBusyLock(gSettingCurrentValue);
 		break;
-
-	case MENU_SCRAMBLER:
-		gSettingCurrentValue = gVfoState[gSettings.CurrentVfo].Scramble;
-		gSettingMaxValues = 9;
-		DISPLAY_Fill(0, 159, 1, 55, COLOR_BACKGROUND);
-		UI_DrawScrambler(gSettingCurrentValue);
-		break;
-
+	
 	case MENU_DCS_ENCRYPT:
 		gSettingCurrentValue = gVfoState[gSettings.CurrentVfo].Encrypt;
 		gSettingMaxValues = 4;
@@ -1304,9 +1305,9 @@ void MENU_ScrollSetting(uint8_t Key)
 	}
 
 	switch (gMenuIndex) {
-	case MENU_ROGER_BEEP:
+	/*case MENU_ROGER_BEEP:
 		UI_DrawSettingRoger(gSettingCurrentValue);
-		break;
+		break;*/
 
 	case MENU_FREQ_STEP:
 		UI_DrawFrequencyStep(gSettingCurrentValue);
@@ -1366,8 +1367,8 @@ void MENU_ScrollSetting(uint8_t Key)
 		UI_DrawSettingBusyLock(gSettingCurrentValue);
 		break;
 
-	case MENU_SCRAMBLER:
-		UI_DrawScrambler(gSettingCurrentValue);
+	case MENU_Compander:
+		UI_DrawCompander(gSettingCurrentValue);
 		break;
 
 	case MENU_DCS_ENCRYPT:
@@ -1433,7 +1434,7 @@ void MENU_PlayAudio(uint8_t MenuID)
 	case MENU_PROMPT_TEXT:   ID = 0x0C; break;
 	case MENU_VOICE_PROMPT:  ID = 0x0E; break;
 	case MENU_KEY_BEEP:      ID = 0x0F; break;
-	case MENU_ROGER_BEEP:    ID = 0x10; break;
+	//case MENU_ROGER_BEEP:    ID = 0x10; break;
 	case MENU_DUAL_DISPLAY:  ID = 0x1E; break;
 	case MENU_TX_PRIORITY:   ID = 0x13; break;
 	case MENU_SAVE_MODE:     ID = 0x14; break;
@@ -1460,7 +1461,7 @@ void MENU_PlayAudio(uint8_t MenuID)
 	case MENU_TX_POWER:      ID = 0x28; break;
 	case MENU_BAND_WIDTH:    ID = 0x29; break;
 	case MENU_BUSY_LOCK:     ID = 0x2A; break;
-	case MENU_SCRAMBLER:     ID = 0x2B; break;
+	//case MENU_SCRAMBLER:     ID = 0x2B; break;
 	case MENU_DCS_ENCRYPT:   ID = 0x2C; break;
 	case MENU_MUTE_CODE:     ID = 0x2D; break;
 	case MENU_CH_NAME:       ID = 0x2F; break;

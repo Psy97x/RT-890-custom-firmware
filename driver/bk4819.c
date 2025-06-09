@@ -530,6 +530,25 @@ void BK4819_EnableCompander(bool bEnable)
 	}
 }
 
+void BK4819_SetCompanderAdjustment(int8_t adjust)
+{
+    uint16_t rxExpander = gCalibration.AF_RX_Expander;
+    uint16_t txCompressor = gCalibration.AF_TX_Compress;
+
+    if (adjust == 2) {
+        // RX Expander = Stock, TX Compressor Off
+        rxExpander = gCalibration.AF_RX_Expander;
+		txCompressor = 0x0000;
+    } else if (adjust == 0) {
+        //Expander off
+        rxExpander = 0x0000;
+        txCompressor = 0x0000;
+    } 
+
+    BK4819_WriteRegister(0x28, rxExpander);
+    BK4819_WriteRegister(0x29, txCompressor);
+}
+
 void BK4819_EnableVox(bool bEnable)
 {
 	uint16_t Value;
@@ -634,7 +653,8 @@ void BK4819_StartAudio(void)
 	} else {
 		// FM
 		BK4819_EnableScramble(gMainVfo->Scramble);
-		BK4819_EnableCompander(true);
+		//BK4819_EnableCompander(true);
+		BK4819_SetCompanderAdjustment(gExtendedSettings.CompanderAdjust);
 		// BK4819_WriteRegister(0x43, 0x3028); // restore filter just in case -
 											// this gets overwritten by sane defaults anyway.
 		// Unset bit 4 of register 73 (Auto Frequency Control Disable)

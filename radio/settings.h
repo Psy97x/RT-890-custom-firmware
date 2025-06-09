@@ -179,7 +179,8 @@ typedef struct __attribute__((packed)) {
 	uint8_t SqGlitchBase;
 	//0x14
 	uint8_t SqMode: 2;
-	uint8_t Undefined2: 6; // free for use
+	uint8_t CompanderAdjust: 2; //added for Compander Menu
+	uint8_t Undefined2: 4; // free for use
 	//0x15...
 } gExtendedSettings_t;
 

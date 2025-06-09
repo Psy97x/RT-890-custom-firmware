@@ -510,3 +510,13 @@ void UI_DrawSettingNumList(uint8_t Index, uint8_t Max)
 	Int2Ascii((Index + 1) % Max, Len);
 	UI_DrawString(24, 24, gShortString, 3);
 }
+
+void UI_DrawCompander(uint8_t Index){
+	static const char Mode[3][9] = {
+		"off      ",
+		"stock    ",
+		"TX off   ",
+	};
+	UI_DrawSettingOptionEx(Mode[Index], 9, 0);
+	UI_DrawSettingOptionEx(Mode[(Index + 1) % 3], 9, 1);
+}
