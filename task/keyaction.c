@@ -63,7 +63,7 @@ void SetDefaultKeyShortcuts(uint8_t IncludeSideKeys) {
 		gSettings.Actions[0] = ACTION_FREQUENCY_DETECT;			//Side 1 long
 		gSettings.Actions[1] = ACTION_MONITOR;					//Side 1 short
 		gSettings.Actions[2] = ACTION_FLASHLIGHT;				//Side 2 long
-		gSettings.Actions[3] = ACTION_ROGER_BEEP;				//Side 2 short
+		gSettings.Actions[3] = ACTION_COMPANDERSET;				//Side 2 short
 	}
 
 	gExtendedSettings.KeyShortcut[0] = ACTION_FM_RADIO;			//0 key long
@@ -222,12 +222,12 @@ void KeypressAction(uint8_t Action) {
 				BK4819_SetToneFrequency(false, gSettings.ToneFrequency);
 				break;
 
-			case ACTION_ROGER_BEEP:
+		/*	case ACTION_ROGER_BEEP:
 				gSettings.RogerBeep = (gSettings.RogerBeep + 1) % 4;
 				SETTINGS_SaveGlobals();
 				BEEP_Play(740, 2, 100);
-				UI_DrawRoger();
-				break;
+				UI_DrawRoger(); 
+				break;			*/
 
 			case ACTION_SCAN:
 				gScanStartFreqOrChannel = gSettings.WorkMode ? gSettings.VfoChNo[gSettings.CurrentVfo] : gVfoInfo[gSettings.CurrentVfo].Frequency;
@@ -301,6 +301,13 @@ void KeypressAction(uint8_t Action) {
 				gMenuIndex = MENU_MIC_GAIN;
 				DISPLAY_Fill(0, 159, 1, 81, COLOR_BACKGROUND);
 				MENU_DrawSetting();
+				break;
+
+			case ACTION_COMPANDERSET:
+				gExtendedSettings.CompanderAdjust = (gExtendedSettings.CompanderAdjust + 1) % 3;
+				SETTINGS_SaveGlobals();
+				BK4819_SetCompanderAdjustment(gExtendedSettings.CompanderAdjust);		
+				UI_DrawDialogText(DIALOG_COMPANDER, gExtendedSettings.CompanderAdjust);
 				break;
 
 			case ACTION_DUAL_STANDBY:
