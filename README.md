@@ -8,6 +8,8 @@ This is my variant of the OEFW-community firmware. Mostly UI based, my focus is 
 - ui is inspired by the first marketing pictures from iRadio
 - Bandwith Wide/Narrow fix. Before it did nothing. Improvement on modulation.
 - Battery shown in % (beta)
+- Added Compander menu (beta) with 3 settings: RX expander and TX compressor off, Stock settings from calibration, RX expander on TX compressor off
+- started to remove roger beep and scrambler
 
 Future TODOs: 
 - remove some non-HAM features like Roger beep or Scrambler
