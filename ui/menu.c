@@ -37,7 +37,7 @@ void UI_DrawSettingOption(const char *pString, uint8_t Index)
 
 void UI_DrawSettingRoger(uint8_t Index)
 {
-	static const char Mode[4][7] = {
+	/*static const char Mode[4][7] = {
 		"Off    ",
 		"Roger 1",
 		"Roger 2",
@@ -45,7 +45,7 @@ void UI_DrawSettingRoger(uint8_t Index)
 	};
 
 	UI_DrawSettingOptionEx(Mode[Index], 7, 0);
-	UI_DrawSettingOptionEx(Mode[(Index + 1) % 4], 7, 1);
+	UI_DrawSettingOptionEx(Mode[(Index + 1) % 4], 7, 1);*/
 }
 
 void UI_DrawDtmfMode(uint8_t Index)
@@ -151,7 +151,7 @@ void UI_DrawActions(uint8_t Index)
 		"[DISABLED]  ",
 #endif
 		"Send Tone   ",
-		"Roger Beep  ",
+		"Compander   ",
 #ifdef ENABLE_FM_RADIO
 		"FM Radio    ",
 #else
