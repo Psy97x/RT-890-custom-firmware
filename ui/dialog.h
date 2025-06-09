@@ -30,6 +30,7 @@ enum UI_DialogText_t {
 	DIALOG_KEY_BEEP = 9,
 	DIALOG_PLEASE_CHARGE = 10,
 	DIALOG_NO_CH_AVAILABLE = 14,
+	DIALOG_COMPANDER = 15,
 };
 
 typedef enum UI_DialogText_t UI_DialogText_t;

@@ -88,6 +88,10 @@ void UI_DrawDialogText(UI_DialogText_t Text, bool bSet)
 
 	case DIALOG_NO_CH_AVAILABLE:
 		UI_DrawString(10, 48, "No CH Available", 15);
+		break;	
+
+	case DIALOG_COMPANDER:
+			UI_DrawString(10, 48, "Compander set", 13);
 		break;
 	}
 
